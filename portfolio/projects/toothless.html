@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project Summary — Toothless — Joshua Fleegler</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#1B1E22; --paper-raised:#232629; --line-faint:#2C2F33; --line-mid:#3A3D42;
+    --ink:#EDEEE9; --ink-soft:#B7B9B4; --blue:#6E93C7; --blue-soft:#8FA9CB;
+    --brass:#D2A868; --grey:#8B8D89;
+    --mono:'IBM Plex Mono', ui-monospace, monospace;
+    --sans:'IBM Plex Sans', system-ui, sans-serif;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper); color:var(--ink); font-family:var(--sans); line-height:1.65; font-size:16px;
+    background-image:linear-gradient(var(--line-faint) 1px, transparent 1px), linear-gradient(90deg, var(--line-faint) 1px, transparent 1px);
+    background-size:40px 40px; background-position:-1px -1px;
+  }
+  a{color:inherit;}
+  :focus-visible{outline:2px solid var(--blue); outline-offset:3px;}
+  .wrap{max-width:980px; margin:0 auto; padding:0 28px;}
+
+  header.sheet-bar{
+    position:sticky; top:0; z-index:50; background:rgba(27,30,34,0.92); backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line-mid);
+  }
+  .sheet-bar-inner{display:flex; align-items:center; justify-content:space-between; padding:14px 0; font-family:var(--mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft);}
+  .mark{color:var(--blue); font-weight:600;}
+  nav a{text-decoration:none; color:var(--ink-soft); border-bottom:1px solid transparent; padding-bottom:2px;}
+  nav a:hover{color:var(--blue); border-color:var(--blue);}
+
+  .hero-photo{
+    aspect-ratio:16/6;
+    background:var(--paper-raised);
+    border-bottom:1px solid var(--line-mid);
+    overflow:hidden;
+  }
+  .hero-photo img{width:100%; height:100%; object-fit:cover; display:block;}
+
+  main{padding:0 0 100px;}
+  .title-block-area{padding:44px 0 32px; border-bottom:1px solid var(--line-mid); margin-bottom:32px;}
+  .part-no{font-family:var(--mono); font-size:12px; color:var(--blue); display:block; margin-bottom:14px;}
+  .category-tag{font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:18px; display:block;}
+  h1{font-family:var(--mono); font-weight:700; font-size:clamp(30px,4.4vw,46px); text-transform:uppercase; line-height:1.1; margin-bottom:14px;}
+  .byline{color:var(--ink-soft); font-size:15px; margin-bottom:26px;}
+
+  .goal-box{
+    border:1px solid var(--brass); background:var(--paper-raised);
+    padding:20px 24px; max-width:70ch;
+  }
+  .goal-box .k{font-family:var(--mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--brass); display:block; margin-bottom:8px;}
+  .goal-box p{color:var(--ink); font-size:15.5px; font-weight:500;}
+
+  section.log{padding:0 0 36px; border-bottom:1px solid var(--line-mid); margin-bottom:36px;}
+  section.log:last-of-type{border-bottom:none;}
+  .log-num{font-family:var(--mono); font-size:12px; color:var(--blue); display:block; margin-bottom:10px;}
+  h2{font-family:var(--mono); font-weight:600; font-size:20px; text-transform:uppercase; letter-spacing:.01em; margin-bottom:22px;}
+
+  .log-row{display:grid; grid-template-columns:1fr 1fr; gap:32px; align-items:stretch; margin-bottom:22px;}
+  .log-row.text-first{grid-template-columns:1fr 1fr;}
+  @media (max-width:760px){
+    .log-row, .log-row.text-first{grid-template-columns:1fr; align-items:start;}
+    .log-row.text-first .log-media{order:2;}
+  }
+  .log-row p{color:var(--ink-soft); font-size:15.5px;}
+  .log-row .log-media{height:100%;}
+  .log-row .log-media img{height:100%; object-fit:cover;}
+
+  p.body-text{color:var(--ink-soft); font-size:15.5px; max-width:72ch; margin-bottom:16px;}
+
+  .log-media{border:1px solid var(--line-mid); background:var(--paper-raised); overflow:hidden;}
+  .log-media img{width:100%; display:block;}
+  .caption{font-family:var(--mono); font-size:11.5px; color:var(--grey); margin-top:8px; letter-spacing:.02em;}
+
+  .media-pair{display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-bottom:8px;}
+  @media (max-width:760px){.media-pair{grid-template-columns:1fr;}}
+
+  .video-embed{position:relative; width:100%; aspect-ratio:16/9; background:#000; border:1px solid var(--line-mid); overflow:hidden;}
+  .video-embed.portrait{aspect-ratio:9/16; max-width:320px;}
+  .video-embed iframe{width:100%; height:100%; border:none; display:block;}
+
+  .diagram-frame{border:1px solid var(--line-mid); background:#2E323A; padding:4px; margin-bottom:8px;}
+  .diagram-frame img{width:100%; display:block;}
+
+  .github-card{
+    display:flex; align-items:center; gap:14px;
+    border:1px solid var(--line-mid); background:var(--paper-raised);
+    padding:16px 20px; text-decoration:none; max-width:520px;
+    transition:border-color .15s ease;
+  }
+  .github-card:hover{border-color:var(--blue);}
+  .github-card svg{flex-shrink:0; color:var(--ink);}
+  .github-card .repo{font-family:var(--mono); font-weight:600; font-size:14px;}
+  .github-card .owner{font-family:var(--mono); font-size:12px; color:var(--grey); margin-top:2px;}
+
+  footer{
+    padding:28px 0 40px;
+    display:flex; justify-content:space-between;
+    font-family:var(--mono); font-size:11px; color:var(--grey); letter-spacing:.05em;
+  }
+
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} }
+</style>
+</head>
+<body>
+
+<header class="sheet-bar">
+  <div class="wrap sheet-bar-inner">
+    <div><span class="mark">JF</span> &nbsp;Portfolio</div>
+    <nav><a href="../index.html">← Back to projects</a></nav>
+  </div>
+</header>
+
+<div class="hero-photo">
+  <img src="../assets/toothless.jpg" alt="Toothless-inspired quadruped walking robot, front three-quarter view">
+</div>
+
+<main class="wrap">
+
+  <div class="title-block-area">
+    <span class="part-no">No. 001</span>
+    <span class="category-tag">Personal / School Projects</span>
+    <h1>Project Summary — Toothless</h1>
+    <p class="byline">Project by Josh Fleegler and Douglas Lilly</p>
+
+    <div class="goal-box">
+      <span class="k">Goal</span>
+      <p>Design and create a multi-pedal, walking robot given a kit of 8 high-torque servos and a Raspberry Pi. In order to accomplish our goal, we had to design around our kit. What started out as sketches slowly transformed into a functioning, physical robot.</p>
+    </div>
+  </div>
+
+  <section class="log">
+    <span class="log-num">01</span>
+    <h2>Sketching</h2>
+    <div class="log-row">
+      <div>
+        <div class="log-media"><img src="../assets/toothless-project/sketch.jpg" alt="Hand-drawn preliminary sketch of the Toothless robot design"></div>
+      </div>
+      <div>
+        <p>Inspired by the character Toothless from How to Train Your Dragon, the preliminary sketch of our bot imagined how we could integrate servos and our other electronics into a functional design. The initial idea was to have 2 servos per leg, and to contain the remaining electronics inside of the body.</p>
+        <br>
+        <p>Originally, there were hopes to have other complex movements incorporated into the design, such as flappable wings. Unfortunately, due to the restricted number of motors, this feature will have to be implemented in future iterations.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="log">
+    <span class="log-num">02</span>
+    <h2>Preliminary Design</h2>
+    <div class="diagram-frame"><img src="../assets/toothless-project/preliminary-design.jpg" alt="Labeled CAD render of the preliminary design showing Raspberry Pi 4B, servo controllers, IMU, LX-16A servos, and battery placement"></div>
+    <p class="body-text">The first iteration of the bot design provided a general structure for the sizing and placement of different components, which was the main goal of this preliminary CAD.</p>
+  </section>
+
+  <section class="log">
+    <span class="log-num">03</span>
+    <h2>Secondary Design</h2>
+    <div class="diagram-frame"><img src="../assets/toothless-project/secondary-design.jpg" alt="Labeled CAD render of the secondary design showing head, shell, wings, leg sub-assemblies, chassis, and tail"></div>
+    <p class="body-text">The secondary design saw structural improvements and organization compared to the first design. In this iteration, we introduced a more realistic leg design, feet with larger surface area, and a case with decorative features to enclose our bot. The chassis, as seen below, was designed with organization in mind. Each area of the chassis houses a different piece of electrical hardware.</p>
+    <div class="diagram-frame"><img src="../assets/toothless-project/electronics-layout.jpg" alt="Labeled CAD render of the chassis electronics layout showing chassis, Raspberry Pi 4B, motor controller, and voltage converter"></div>
+  </section>
+
+  <section class="log">
+    <span class="log-num">04</span>
+    <h2>First Leg</h2>
+    <p class="body-text">After completing our CAD, we wanted to test our leg design independently, as the whole success of the bot depended on it. We 3D printed our leg brackets and assembled the first leg. Testing for structural integrity of the brackets and extreme positions of the leg as a whole, we confirmed that we would move forward with our leg design.</p>
+    <div class="media-pair">
+      <div>
+        <div class="log-media"><img src="../assets/toothless-project/first-leg.jpg" alt="Photo of the first assembled robot leg"></div>
+        <p class="caption">First assembled leg.</p>
+      </div>
+      <div>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/thU_Ixz8JlQ" title="Leg motion testing" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <p class="caption">Leg motion testing.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="log">
+    <span class="log-num">05</span>
+    <h2>Assembling the Bot</h2>
+    <div class="log-row">
+      <div>
+        <div class="video-embed portrait">
+          <iframe src="https://www.youtube.com/embed/UwfjNWc6MY4" title="Time-lapse of the first assembly" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <p class="caption">Time-lapse of the first assembly.</p>
+      </div>
+      <div>
+        <p>After completing the first full design, we began 3D printing all of our components. The assembly came together rather seamlessly as the legs were constructed and fixed to the chassis. The major notes from this initial design were concerned with testing the strength of some components, as well as the flow of our electronic organization. As we expected, this first assembly would not be our final design.</p>
+      </div>
+    </div>
+    <div class="media-pair">
+      <div>
+        <div class="log-media"><img src="../assets/toothless-project/assembly-front.jpg" alt="Front view of the completed robot assembly"></div>
+        <p class="caption">Front view of completed assembly.</p>
+      </div>
+      <div>
+        <div class="log-media"><img src="../assets/toothless-project/assembly-side.jpg" alt="Side view of the completed robot assembly"></div>
+        <p class="caption">Side view of completed assembly.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="log">
+    <span class="log-num">06</span>
+    <h2>Baby Steps</h2>
+    <div class="log-row">
+      <div>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/X7csTGXLmFc" title="Baby steps time lapse, robot moving at 15X speed" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <p class="caption">Robot moving at 15X speed.</p>
+      </div>
+      <div>
+        <p>With the first fully assembled version of our bot, it was time to test the movement capability. We programmed our first successful gait, which had the bot moving 1 leg at a time. Even with this non-optimal gait, we saw forward motion! The result was a somewhat slow bot with a speed of approximately 0.605 cm/s in a not-so-straight path of motion.</p>
+      </div>
+    </div>
+    <div class="log-row text-first">
+      <div>
+        <p>Through our preliminary motion testing, we were able to test the structural elements of our bot. Unfortunately, some components needed an upgrade. The main issue was the bracket connecting the leg to the chassis. After stress testing, the brackets kept snapping. Additionally, we wanted to improve our electronics housing.</p>
+      </div>
+      <div class="log-media">
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/XpX-Rh0Eb40" title="Baby steps, robot moving in real time" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <p class="caption">Robot moving in real time.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="log">
+    <span class="log-num">07</span>
+    <h2>Gait Testing</h2>
+    <div class="media-pair">
+      <div>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/x9vaavhW91I" title="Early walking attempt" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <p class="caption">An earlier walking attempt with our final gait.</p>
+      </div>
+      <div>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/Nd1oyohaxqo" title="Later walking attempt" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <p class="caption">A later walking attempt with our final gait.</p>
+      </div>
+    </div>
+    <p class="body-text" style="margin-top:20px;">After our redesign, which proved effective in ensuring that no parts snapped, we proceeded to our final gait. Toothless walks by alternating which legs it's moving in each step, leveraging its ability to balance on only 2 legs. Lifting 2 opposite legs at once (front left and back right / front right and back left) and taking a step, our bot is able to propel itself forward. Originally, the feet of our bot were slipping since they were just PLA, so we added rubber bands to provide some grip. We do have a TPU version of the foot that is yet to be tested. Overall, the stability of our bot enabled it, eventually, to walk in a straight path with a speed of about 1.5 cm/s. While it may be slower than some other bots, its balance and consistency prove our bot worthy of calling itself a successful quadruped robot.</p>
+  </section>
+
+  <section class="log">
+    <span class="log-num">08</span>
+    <h2>The Final Test</h2>
+    <div class="log-row">
+      <div>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/GcehaA1bh-4" title="Quadruped race" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      </div>
+      <div>
+        <p>To prove our bot's ability, we participated in a race with other quadrupeds, after which we can proudly claim a 3rd place title. As seen in the video, the race for 3rd was similar to the turtle and the hare, but, ultimately, the balance and reliability of our bot, like the turtle, pushed it forward.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="log">
+    <span class="log-num">09</span>
+    <h2>Future Modifications</h2>
+    <div class="log-row">
+      <div>
+        <div class="log-media"><img src="../assets/toothless-project/tpu-feet.jpg" alt="Photo of the TPU version of the robot's feet"></div>
+        <p class="caption">The TPU version of the feet.</p>
+      </div>
+      <div>
+        <p>If we had more time, we would further optimize the gait of our robot. It has lots of potential, and we would like to see it go a bit faster. For physical alterations, we would use TPU feet to see if they help improve grip.</p>
+        <br>
+        <p>Additionally, it would be cool to introduce more motors into the design to flap the wings or tail. Getting longer cables or shortening our chassis to better cover wires might also be an improvement.</p>
+        <br>
+        <p>All in all, our bot's not perfect, but it works. We set out to create a functioning quadruped, and we've done just that. The nice thing about its imperfection is that there's plenty of room for future improvement.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="log" style="border-bottom:none; margin-bottom:0; padding-bottom:0;">
+    <span class="log-num">10</span>
+    <h2>GitHub</h2>
+    <a class="github-card" href="https://github.com/theDclilly/ME134_LewanSoul" target="_blank" rel="noopener">
+      <svg height="28" width="28" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+      <div>
+        <div class="repo">ME134_LewanSoul</div>
+        <div class="owner">theDclilly</div>
+      </div>
+    </a>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <span>© 2026 Joshua Fleegler</span>
+  <span>No. 001 · Toothless</span>
+</footer>
+
+</body>
+</html>

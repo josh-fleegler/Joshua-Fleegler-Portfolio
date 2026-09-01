@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Joshua Fleegler — Mechanical Design Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#1B1E22;
+    --paper-raised:#232629;
+    --line-faint:#2C2F33;
+    --line-mid:#3A3D42;
+    --ink:#EDEEE9;
+    --ink-soft:#B7B9B4;
+    --blue:#6E93C7;
+    --blue-soft:#8FA9CB;
+    --brass:#D2A868;
+    --orange:#E2703C;
+    --grey:#8B8D89;
+
+    --mono:'IBM Plex Mono', ui-monospace, monospace;
+    --sans:'IBM Plex Sans', system-ui, sans-serif;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--sans);
+    font-size:16px;
+    line-height:1.5;
+    background-image:
+      linear-gradient(var(--line-faint) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line-faint) 1px, transparent 1px);
+    background-size:40px 40px;
+    background-position:-1px -1px;
+  }
+
+  a{color:inherit;}
+
+  :focus-visible{
+    outline:2px solid var(--blue);
+    outline-offset:3px;
+  }
+
+  .wrap{
+    max-width:1100px;
+    margin:0 auto;
+    padding:0 28px;
+  }
+
+  /* ---------- drawing header bar ---------- */
+  header.sheet-bar{
+    position:sticky; top:0; z-index:50;
+    background:rgba(27,30,34,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line-mid);
+  }
+  .sheet-bar-inner{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 0;
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+  .sheet-bar-left{display:flex; gap:22px; align-items:center;}
+  .sheet-bar-left .mark{color:var(--blue); font-weight:600;}
+  nav.sheet-nav{display:flex; gap:26px;}
+  nav.sheet-nav a{
+    text-decoration:none; color:var(--ink-soft);
+    border-bottom:1px solid transparent;
+    padding-bottom:2px;
+    transition:color .15s, border-color .15s;
+  }
+  nav.sheet-nav a:hover{color:var(--blue); border-color:var(--blue);}
+
+  /* ---------- hero ---------- */
+  .hero{
+    padding:96px 0 64px;
+    border-bottom:1px solid var(--line-mid);
+  }
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--blue);
+    display:flex; align-items:center; gap:10px;
+    margin-bottom:22px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:22px; height:1px;
+    background:var(--blue);
+    display:inline-block;
+  }
+  h1.name{
+    font-family:var(--mono);
+    font-weight:700;
+    font-size:clamp(38px, 6vw, 68px);
+    letter-spacing:-.01em;
+    text-transform:uppercase;
+    line-height:1.02;
+    max-width:14ch;
+  }
+  .role{
+    margin-top:18px;
+    font-size:19px;
+    color:var(--ink-soft);
+    max-width:52ch;
+  }
+  .thesis{
+    margin-top:10px;
+    font-size:19px;
+    color:var(--ink);
+    max-width:52ch;
+  }
+
+  /* title block component — reused as signature element */
+  .title-block{
+    margin-top:44px;
+    border:1px solid var(--ink);
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    background:var(--paper-raised);
+    max-width:640px;
+  }
+  .title-block .cell{
+    padding:12px 16px;
+    border-right:1px solid var(--line-mid);
+    border-bottom:1px solid var(--line-mid);
+  }
+  .title-block .cell:nth-child(4n){border-right:none;}
+  .title-block .cell .k{
+    font-family:var(--mono);
+    font-size:10px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--grey);
+    display:block;
+    margin-bottom:4px;
+  }
+  .title-block .cell .v{
+    font-family:var(--mono);
+    font-size:13px;
+    color:var(--ink);
+  }
+  .title-block .cell.wide{grid-column:span 2;}
+
+  @media (max-width:640px){
+    .title-block{grid-template-columns:repeat(2,1fr);}
+    .title-block .cell.wide{grid-column:span 2;}
+  }
+
+  /* ---------- section shell ---------- */
+  section{padding:80px 0;}
+  section + section{border-top:1px solid var(--line-mid);}
+
+  .section-head{
+    display:flex; align-items:baseline; gap:16px;
+    margin-bottom:44px;
+  }
+  .section-num{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--blue);
+  }
+  .section-title{
+    font-family:var(--mono);
+    font-weight:600;
+    font-size:13px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--ink);
+  }
+  .section-rule{
+    flex:1;
+    height:1px;
+    background:var(--line-mid);
+  }
+
+  /* ---------- about / BOM ---------- */
+  .about-grid{
+    display:grid;
+    grid-template-columns:1fr 1.3fr;
+    gap:56px;
+    align-items:start;
+  }
+  @media (max-width:800px){
+    .about-grid{grid-template-columns:1fr;}
+  }
+  .about-text p{
+    color:var(--ink-soft);
+    font-size:16px;
+    margin-bottom:16px;
+    max-width:46ch;
+  }
+  .about-text p strong{color:var(--ink); font-weight:600;}
+
+  .bom{
+    border:1px solid var(--ink);
+    background:var(--paper-raised);
+  }
+  .bom-title{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    padding:12px 16px;
+    border-bottom:1px solid var(--ink);
+    display:flex; justify-content:space-between;
+    color:var(--ink-soft);
+  }
+  table.bom-table{
+    width:100%;
+    border-collapse:collapse;
+    font-family:var(--mono);
+    font-size:13px;
+  }
+  table.bom-table th{
+    text-align:left;
+    font-size:10px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--grey);
+    padding:8px 16px;
+    border-bottom:1px solid var(--line-mid);
+  }
+  table.bom-table td{
+    padding:9px 16px;
+    border-bottom:1px solid var(--line-faint);
+    color:var(--ink);
+  }
+  table.bom-table tr:last-child td{border-bottom:none;}
+  table.bom-table td.item-no{color:var(--blue); width:34px;}
+  table.bom-table td.level{color:var(--brass); text-align:right; white-space:nowrap;}
+
+  /* ---------- projects ---------- */
+  .projects-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:32px;
+  }
+  @media (max-width:800px){
+    .projects-grid{grid-template-columns:1fr;}
+  }
+
+  .sheet{
+    background:var(--paper-raised);
+    border:1px solid var(--line-mid);
+    opacity:0;
+    transform:translateY(16px);
+    transition:opacity .5s ease, transform .5s ease, border-color .2s ease, box-shadow .2s ease;
+  }
+  .sheet.in{opacity:1; transform:translateY(0);}
+  .sheet:hover{
+    border-color:var(--blue);
+    box-shadow:0 10px 26px -14px rgba(0,0,0,0.6);
+  }
+
+  .viewport{
+    position:relative;
+    aspect-ratio:4/3;
+    background:
+      linear-gradient(135deg, #24272B 0%, #2A2D31 60%);
+    overflow:hidden;
+    border-bottom:1px solid var(--line-mid);
+  }
+  .viewport svg{width:100%; height:100%; display:block;}
+  .crop{
+    position:absolute; width:16px; height:16px;
+    border:1px solid var(--ink); opacity:.55;
+    transition:border-color .2s ease, opacity .2s ease;
+  }
+  .sheet:hover .crop{border-color:var(--blue); opacity:1;}
+  .crop.tl{top:10px; left:10px; border-right:none; border-bottom:none;}
+  .crop.tr{top:10px; right:10px; border-left:none; border-bottom:none;}
+  .crop.bl{bottom:10px; left:10px; border-right:none; border-top:none;}
+  .crop.br{bottom:10px; right:10px; border-left:none; border-top:none;}
+
+  .sheet-body{padding:20px 22px 24px;}
+  .sheet-header{
+    display:flex; justify-content:space-between; align-items:baseline;
+    margin-bottom:10px;
+  }
+  .sheet-header h3{
+    font-family:var(--mono);
+    font-size:17px;
+    font-weight:600;
+    text-transform:uppercase;
+    letter-spacing:.01em;
+  }
+  .part-no{
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--blue);
+  }
+  .sheet-desc{
+    color:var(--ink-soft);
+    font-size:14.5px;
+    margin-bottom:16px;
+  }
+
+  .spec-row{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    border-top:1px solid var(--line-faint);
+  }
+  .spec-row .spec{
+    padding:10px 0 0;
+  }
+  .spec .k{
+    font-family:var(--mono);
+    font-size:9.5px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--grey);
+    display:block;
+    margin-bottom:3px;
+  }
+  .spec .v{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--ink);
+  }
+
+  /* ---------- contact ---------- */
+  .contact-block{
+    display:grid;
+    grid-template-columns:1.1fr .9fr;
+    gap:56px;
+    align-items:center;
+  }
+  @media (max-width:800px){
+    .contact-block{grid-template-columns:1fr;}
+  }
+  .contact-block h2{
+    font-family:var(--mono);
+    font-weight:700;
+    font-size:clamp(28px,4vw,42px);
+    text-transform:uppercase;
+    line-height:1.1;
+    margin-bottom:16px;
+  }
+  .contact-block > div > p{
+    color:var(--ink-soft);
+    max-width:44ch;
+    margin-bottom:26px;
+  }
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    text-decoration:none;
+    padding:13px 20px;
+    border:1px solid var(--ink);
+    color:var(--ink);
+    background:transparent;
+    transition:background .15s ease, color .15s ease;
+  }
+  .btn:hover{background:var(--ink); color:var(--paper);}
+  .btn.primary{
+    background:var(--blue); border-color:var(--blue); color:#0F1113;
+  }
+  .btn.primary:hover{background:#8FA9CB; border-color:#8FA9CB;}
+  .btn-row{display:flex; gap:14px; flex-wrap:wrap;}
+
+  footer{
+    padding:28px 0 40px;
+    display:flex; justify-content:space-between;
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--grey);
+    letter-spacing:.05em;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    .sheet{transition:none; opacity:1; transform:none;}
+  }
+</style>
+</head>
+<body>
+
+<header class="sheet-bar">
+  <div class="wrap sheet-bar-inner">
+    <div class="sheet-bar-left">
+      <span class="mark">JF</span>
+      <span>About</span>
+    </div>
+    <nav class="sheet-nav">
+      <a href="index.html">Home</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Mechanical Design &amp; Manufacturing</div>
+    <h1 class="name">Joshua Fleegler</h1>
+    <p class="role">Mechanical Design Engineer</p>
+    <p class="thesis">I take parts from sketch to production — design-for-manufacturing driven CAD work, tolerance stack-ups, and hands-on prototyping across machining, injection molding, and sheet metal.</p>
+
+    <div class="title-block">
+      <div class="cell">
+        <span class="k">Name</span>
+        <span class="v">Joshua Fleegler</span>
+      </div>
+      <div class="cell">
+        <span class="k">Discipline</span>
+        <span class="v">Mechanical Engineering</span>
+      </div>
+      <div class="cell">
+        <span class="k">Focus</span>
+        <span class="v">Design for Manufacturing &amp; Precision Manufacturing</span>
+      </div>
+      <div class="cell">
+        <span class="k">Status</span>
+        <span class="v">Open to work</span>
+      </div>
+      <div class="cell wide">
+        <span class="k">Location</span>
+        <span class="v">Berkeley, CA (open to relocation)</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-num">01</span>
+      <span class="section-title">About</span>
+      <span class="section-rule"></span>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-text">
+        <p>I'm a mechanical engineer focused on <strong>manufacturable design</strong> — parts that perform in simulation and hold tolerance on the shop floor. My background spans concept modeling, structural and thermal simulation, and design-for-manufacturing reviews with machinists and molders.</p>
+        <p>Recent work has centered on <strong>precision enclosures, fixtures, and mechanism design</strong> for low-volume production, with a habit of prototyping early and iterating against real parts, not just renders.</p>
+        <p>Replace this with your own background — schooling, industries you've worked in, and the kind of problems you like solving.</p>
+      </div>
+
+      <div class="bom">
+        <div class="bom-title">
+          <span>Bill of Materials — Skills</span>
+          <span>Rev A</span>
+        </div>
+        <table class="bom-table">
+          <thead>
+            <tr>
+              <th style="width:34px;">No.</th>
+              <th>Description</th>
+              <th style="text-align:right;">Level</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="item-no">01</td><td>SolidWorks / computer-aided design modeling</td><td class="level">Advanced</td></tr>
+            <tr><td class="item-no">02</td><td>Rapid prototyping (3D printing, shop tools)</td><td class="level">Advanced</td></tr>
+            <tr><td class="item-no">03</td><td>Geometric dimensioning and tolerancing / tolerance stack-up analysis</td><td class="level">Proficient</td></tr>
+            <tr><td class="item-no">04</td><td>Finite element analysis — structural and thermal (ANSYS)</td><td class="level">Proficient</td></tr>
+            <tr><td class="item-no">05</td><td>Design for manufacturing — machining, injection molding, sheet metal</td><td class="level">Proficient</td></tr>
+            <tr><td class="item-no">06</td><td>MATLAB / Python for design calculations</td><td class="level">Proficient</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-num">02</span>
+      <span class="section-title">Contact</span>
+      <span class="section-rule"></span>
+    </div>
+
+    <div class="contact-block">
+      <div>
+        <h2>Let's talk about your next build.</h2>
+        <p>Open to full-time mechanical design and manufacturing engineering roles. Reach out directly or grab a copy of my resume.</p>
+        <div class="btn-row">
+          <a class="btn primary" href="mailto:joshua.fleegler@email.com">Email me</a>
+          <a class="btn" href="resume.pdf">Download résumé</a>
+          <a class="btn" href="#">LinkedIn</a>
+        </div>
+      </div>
+      <div class="title-block" style="max-width:100%; margin-top:0;">
+        <div class="cell wide">
+          <span class="k">Email</span>
+          <span class="v">joshua.fleegler@email.com</span>
+        </div>
+        <div class="cell wide">
+          <span class="k">Phone</span>
+          <span class="v">(555) 010-1234</span>
+        </div>
+        <div class="cell wide">
+          <span class="k">Location</span>
+          <span class="v">Berkeley, CA (open to relocation)</span>
+        </div>
+        <div class="cell wide">
+          <span class="k">Portfolio rev.</span>
+          <span class="v">A · 2026</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="wrap">
+  <span>© 2026 Joshua Fleegler</span>
+  <span>Sheet 1 of 1 · Scale N/A</span>
+</footer>
+
+
+</body>
+</html>

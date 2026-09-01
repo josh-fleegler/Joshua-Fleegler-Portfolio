@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Joshua Fleegler — Mechanical Design Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#1B1E22;
+    --paper-raised:#232629;
+    --line-faint:#2C2F33;
+    --line-mid:#3A3D42;
+    --ink:#EDEEE9;
+    --ink-soft:#B7B9B4;
+    --blue:#6E93C7;
+    --blue-soft:#8FA9CB;
+    --brass:#D2A868;
+    --orange:#E2703C;
+    --grey:#8B8D89;
+
+    --mono:'IBM Plex Mono', ui-monospace, monospace;
+    --sans:'IBM Plex Sans', system-ui, sans-serif;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--sans);
+    font-size:16px;
+    line-height:1.5;
+    background-image:
+      linear-gradient(var(--line-faint) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line-faint) 1px, transparent 1px);
+    background-size:40px 40px;
+    background-position:-1px -1px;
+  }
+
+  a{color:inherit;}
+  :focus-visible{outline:2px solid var(--blue); outline-offset:3px;}
+
+  .wrap{max-width:1100px; margin:0 auto; padding:0 28px;}
+
+  header.sheet-bar{
+    position:sticky; top:0; z-index:50;
+    background:rgba(27,30,34,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line-mid);
+  }
+  .sheet-bar-inner{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 0;
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+  .sheet-bar-left{display:flex; gap:22px; align-items:center;}
+  .sheet-bar-left .mark{color:var(--blue); font-weight:600;}
+  nav.sheet-nav{display:flex; gap:26px;}
+  nav.sheet-nav a{
+    text-decoration:none; color:var(--ink-soft);
+    border-bottom:1px solid transparent;
+    padding-bottom:2px;
+    transition:color .15s, border-color .15s;
+  }
+  nav.sheet-nav a:hover{color:var(--blue); border-color:var(--blue);}
+
+  .hero{
+    padding:96px 0 60px;
+    border-bottom:1px solid var(--line-mid);
+  }
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--blue);
+    display:flex; align-items:center; gap:10px;
+    margin-bottom:22px;
+  }
+  .eyebrow::before{content:""; width:22px; height:1px; background:var(--blue); display:inline-block;}
+  h1.name{
+    font-family:var(--mono);
+    font-weight:700;
+    font-size:clamp(38px, 6vw, 68px);
+    letter-spacing:-.01em;
+    text-transform:uppercase;
+    line-height:1.02;
+  }
+  .role{margin-top:18px; font-size:19px; color:var(--ink-soft); max-width:52ch;}
+
+  section.category{padding:64px 0; border-bottom:1px solid var(--line-mid);}
+  .category-head{display:flex; align-items:baseline; gap:16px; margin-bottom:32px;}
+  .category-num{font-family:var(--mono); font-size:12px; color:var(--blue);}
+  .category-title{
+    font-family:var(--mono); font-weight:600; font-size:13px;
+    letter-spacing:.1em; text-transform:uppercase; color:var(--ink);
+  }
+  .category-rule{flex:1; height:1px; background:var(--line-mid);}
+
+  a.project-card{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:32px;
+    align-items:center;
+    text-decoration:none;
+    color:inherit;
+  }
+  @media (max-width:760px){
+    a.project-card{grid-template-columns:1fr;}
+  }
+
+  .project-card .viewport{
+    position:relative;
+    aspect-ratio:4/3;
+    overflow:hidden;
+    border:1px solid var(--line-mid);
+    background:var(--paper-raised);
+    transition:border-color .2s ease, box-shadow .2s ease;
+  }
+  .project-card .viewport img{
+    width:100%; height:100%; object-fit:cover; display:block;
+  }
+  .project-card:hover .viewport{
+    border-color:var(--blue);
+    box-shadow:0 10px 26px -14px rgba(0,0,0,0.6);
+  }
+  .crop{position:absolute; width:16px; height:16px; border:1px solid var(--ink); opacity:.55; transition:border-color .2s ease, opacity .2s ease;}
+  a.project-card:hover .crop{border-color:var(--blue); opacity:1;}
+  .crop.tl{top:10px; left:10px; border-right:none; border-bottom:none;}
+  .crop.tr{top:10px; right:10px; border-left:none; border-bottom:none;}
+  .crop.bl{bottom:10px; left:10px; border-right:none; border-top:none;}
+  .crop.br{bottom:10px; right:10px; border-left:none; border-top:none;}
+
+  .project-meta .part-no{font-family:var(--mono); font-size:11px; color:var(--blue); display:block; margin-bottom:10px;}
+  .project-meta h3{
+    font-family:var(--mono); font-weight:600; font-size:22px;
+    text-transform:uppercase; letter-spacing:.01em; margin-bottom:10px;
+    transition:color .15s ease;
+  }
+  a.project-card:hover .project-meta h3{color:var(--blue-soft);}
+  .project-meta p{color:var(--ink-soft); font-size:14.5px; max-width:42ch;}
+  .project-meta .view-link{
+    display:inline-flex; align-items:center; gap:6px;
+    margin-top:16px;
+    font-family:var(--mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--blue);
+  }
+
+  footer{
+    padding:28px 0 40px;
+    display:flex; justify-content:space-between;
+    font-family:var(--mono); font-size:11px; color:var(--grey); letter-spacing:.05em;
+  }
+
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} }
+</style>
+</head>
+<body>
+
+<header class="sheet-bar">
+  <div class="wrap sheet-bar-inner">
+    <div class="sheet-bar-left">
+      <span class="mark">JF</span>
+      <span>Portfolio</span>
+    </div>
+    <nav class="sheet-nav">
+      <a href="about.html">About</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Mechanical Design &amp; Manufacturing</div>
+    <h1 class="name">Joshua Fleegler</h1>
+    <p class="role">Selected projects across personal builds, industry work, and research.</p>
+  </div>
+</section>
+
+<section class="category">
+  <div class="wrap">
+    <div class="category-head">
+      <span class="category-num">01</span>
+      <span class="category-title">Personal / School Projects</span>
+      <span class="category-rule"></span>
+    </div>
+
+    <a class="project-card" href="projects/toothless.html">
+      <div class="viewport">
+        <img src="assets/toothless.jpg" alt="Toothless-inspired quadruped walking robot with 3D-printed dragon head and articulated legs">
+        <span class="crop tl"></span><span class="crop tr"></span>
+        <span class="crop bl"></span><span class="crop br"></span>
+      </div>
+      <div class="project-meta">
+        <span class="part-no">No. 001</span>
+        <h3>Walking Toothless Dragon</h3>
+        <p>A 3D-printed, servo-driven quadruped walking robot modeled after Toothless from How to Train Your Dragon.</p>
+        <span class="view-link">View project →</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<section class="category">
+  <div class="wrap">
+    <div class="category-head">
+      <span class="category-num">02</span>
+      <span class="category-title">Professional / Industry Work</span>
+      <span class="category-rule"></span>
+    </div>
+
+    <a class="project-card" href="projects/measurement-fixture.html">
+      <div class="viewport">
+        <img src="assets/measurement-fixture.png" alt="CAD render of a high-precision measurement fixture">
+        <span class="crop tl"></span><span class="crop tr"></span>
+        <span class="crop bl"></span><span class="crop br"></span>
+      </div>
+      <div class="project-meta">
+        <span class="part-no">No. 002</span>
+        <h3>High-Precision Measurement Fixture</h3>
+        <p>A fixture designed to hold tight-tolerance parts steady for repeatable micrometer measurement.</p>
+        <span class="view-link">View project →</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<section class="category">
+  <div class="wrap">
+    <div class="category-head">
+      <span class="category-num">03</span>
+      <span class="category-title">Research</span>
+      <span class="category-rule"></span>
+    </div>
+
+    <a class="project-card" href="projects/firearm-safety.html">
+      <div class="viewport">
+        <svg viewBox="0 0 400 300" preserveAspectRatio="none" style="width:100%;height:100%;display:block;">
+          <rect width="400" height="300" fill="#232629"/>
+          <g stroke="#6E93C7" stroke-width="1" opacity="0.45">
+            <line x1="0" y1="150" x2="400" y2="150"/>
+            <line x1="200" y1="0" x2="200" y2="300"/>
+            <circle cx="200" cy="150" r="70" fill="none"/>
+            <rect x="130" y="95" width="140" height="110" fill="none"/>
+          </g>
+        </svg>
+        <span class="crop tl"></span><span class="crop tr"></span>
+        <span class="crop bl"></span><span class="crop br"></span>
+      </div>
+      <div class="project-meta">
+        <span class="part-no">No. 003</span>
+        <h3>Inert Firearm Models</h3>
+        <p>Inert firearm models to improve safety.</p>
+        <span class="view-link">View project →</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<footer class="wrap">
+  <span>© 2026 Joshua Fleegler</span>
+  <span>Sheet 1 of 1 · Scale N/A</span>
+</footer>
+
+</body>
+</html>
